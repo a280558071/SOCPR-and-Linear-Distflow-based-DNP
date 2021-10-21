@@ -22,7 +22,7 @@ N_subs=[13,14,15,16];  % Subs nodes
 N_loads=1:12; % Load nodes
 v_min=0.95^2;
 v_max=1.05^2;
-P_max=8 ; % max power in any distribution line
+S_max=12 ; % max power in any distribution line
 M=1e8;
 % line investment cost denoted by 
 Cost=LineInf(:,7).*LineInf(:,4);
@@ -80,8 +80,9 @@ Cons=[Cons,Cons_V];
 %% 3. Voltage limits
 % v_min<=v<=v_max
 Cons=[Cons,v_min<=v_i<=v_max];
-%% 4. l_ij<=l_ij_max
-Cons_PQ=[abs(P_ij)<=y_ij*P_max,abs(Q_ij)<=y_ij*P_max];
+%% 4. P_ij^2+Q_ij^2<=S_ij_max
+% Cons_PQ=[abs(P_ij)<=y_ij*S_max,abs(Q_ij)<=y_ij*S_max];
+Cons_PQ=[P_ij.^2+Q_ij.^2<=y_ij*S_max.^2];
 Cons=[Cons, Cons_PQ];
 %% **********Objectives*************
 Obj_inv=sum(Cost.*y_ij);
@@ -102,7 +103,8 @@ s_g_subs_Q=value(g_subs_Q);
 s_Obj=value(Obj);
 %% Print the results in the command line
 display('————————规划方案如下——————————————');
-display(['   建设线路方案： ',num2str(s_y_ij'),' MW']);
+display(['   建设线路方案： ',num2str(s_y_ij')]);
+display([' (1/0 表示 建设/不建设 该线路, 线路编号参见输入文件)']);
 display('————————规划建设成本如下——————————————');
 display(['   建设配电线路成本： ',num2str(value(Obj_inv)),' 美元']);
 display(['   失负荷成本:  ',num2str(value(Obj_ope)),'  美元']);
