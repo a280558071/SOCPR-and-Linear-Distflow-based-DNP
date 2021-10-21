@@ -10,6 +10,6 @@ Therefore, you should have MATLAB, YALMIP and GUROBI installed in your PC to mak
 "SOCPROPF_DNP.m" is DNP based on SOCP Relaxation OPF Model in [3].
 
 * *See https://yalmip.github.io/ for more information.
-* [1] M. E. Baran and F. F. Wu, “Optimal capacitor placement on radial distribution systems,” IEEE Trans. Power Delivery, vol. 4, no. 1, pp. 725–734,1989.
+* [1] M. E. Baran and F. F. Wu, “Optimal capacitor placement on radial distribution systems,” IEEE Trans. Power Delivery, vol. 4, no. 1, pp. 725–734,1989.
 * [2] M. E. Baran and F. F. Wu, “Optimal sizing of capacitors placed on a radial distribution system,” IEEE Trans. Power Delivery, vol. 4, no. 1, pp. 735–743, 1989
 * [3] L Gan, N Li, U Topcu, SH Low, Exact convex relaxation of optimal power flow in radial networks, IEEE Transactions on Automatic Control 60 (1), 72-87, 2014
