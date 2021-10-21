@@ -110,7 +110,8 @@ s_g_subs_Q=value(g_subs_Q);
 s_Obj=value(Obj);
 %% Print the results in the command line
 display('————————规划方案如下——————————————');
-display(['   建设线路方案： ',num2str(s_y_ij'),' MW']);
+display(['   建设线路方案： ',num2str(s_y_ij')]);
+display([' (1/0 表示 建设/不建设 该线路, 线路编号参见输入文件)']);
 display('————————规划建设成本如下——————————————');
 display(['   建设配电线路成本： ',num2str(value(Obj_inv)),' 美元']);
 display(['   失负荷成本:  ',num2str(value(Obj_ope)),'  美元']);
