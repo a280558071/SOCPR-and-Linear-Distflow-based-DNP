@@ -7,6 +7,7 @@ The modeling is completed by YALMIP, which is a toolbox in MATLAB to do optimiza
 Therefore, you should have MATLAB, YALMIP and GUROBI installed in your PC to make these codes work.
 
 "LinearDistFlow_DNP.m" is DNP based on Linear Distflow Optimal Power Flow (OPF) Model in [1] and [2], but also described in a compact form in Section III in [3].
+
 "SOCPROPF_DNP.m" is DNP based on SOCP Relaxation OPF Model in [3].
 
 * *See https://yalmip.github.io/ for more information.
