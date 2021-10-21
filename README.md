@@ -1,5 +1,5 @@
 # SOCPR-and-Linear-Disrflow-based-DNP
-This is a distribution network planning (DNP) method based on Second-Order cone programming (SOCP) relaxation and Linear Distflow. 
+This is two examples for distribution network planning (DNP) method based on Second-Order cone programming (SOCP) relaxation and Linear Distflow. 
 
 The Objective is to minimize the investment cost on distribution lines and the only operation cost, value of lost load(VOLL). 
 
