@@ -76,7 +76,7 @@ Cons=[Cons,Cons_S];
 % v_i-v_j=2Re(z_ij，S_ij*)+(r.^2+x.^2).*l_ij=2(r，P_ij,i+x，Q_ij,i)+(r.^2+x.^2).*l_ij
 % ★ |v_i-v_j-2(r，P_ij+x，Q_ij)-(r.^2+x.^2).*l_ij|＋(1-y_ij)*M
 Cons_V=[v_i(N_subs)==v_max];
-Cons_V=[Cons_V,abs(In'*v_i-2*r.*P_ij-2*x.*Q_ij-z.^2.*l_ij)<=(1-y_ij)*M];
+Cons_V=[Cons_V,abs(In'*v_i-2*r.*P_ij-2*x.*Q_ij+z.^2.*l_ij)<=(1-y_ij)*M];
 Cons=[Cons,Cons_V];
 %% 3. Voltage limits
 % v_min<=v<=v_max
