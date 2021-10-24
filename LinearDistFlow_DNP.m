@@ -101,13 +101,15 @@ s_Q_shed=value(Q_shed);
 s_g_subs_P=value(g_subs_P);
 s_g_subs_Q=value(g_subs_Q);
 s_Obj=value(Obj);
+s_Obj=value(Obj_inv);
+s_Obj=value(Obj_ope);
 %% Print the results in the command line
 display('————————规划方案如下——————————————');
-display(['   建设线路方案： ',num2str(s_y_ij')]);
+display(['   建设线路方案： ',num2str(round(s_y_ij',2))]);
 display([' (1/0 表示 建设/不建设 该线路, 线路编号参见输入文件)']);
 display('————————规划建设成本如下——————————————');
 display(['   建设配电线路成本： ',num2str(value(Obj_inv)),' 美元']);
-display(['   失负荷成本:  ',num2str(value(Obj_ope)),'  美元']);
+display(['   失负荷成本:  ',num2str(round(value(Obj_ope),2)),'  美元']);
 display(['>> 规划建设总成本:  ',num2str(value(Obj)),'  美元']);
 %% Plot the results
 Gi=graph(s,t);
@@ -121,12 +123,12 @@ labelnode(pi,N_subs,{'13','14','15','16'});
 highlight(pi,N_loads,'NodeColor','y','Markersize',20,'NodeFontSize',20);
 highlight(pi,N_subs,'Marker','s','NodeColor','c','Markersize',30,'NodeFontSize',40);
 text(pi.XData, pi.YData, pi.NodeLabel,'HorizontalAlignment', 'center','FontSize', 15); % put nodes' label in right position.
-text(pi.XData+os, pi.YData+os, num2str([s_P_shed;zeros(length(N_subs),1)]),'HorizontalAlignment', 'center','FontSize', 20, 'Color','r'); % printf the shedded load (if any).
+text(pi.XData+os, pi.YData+os, num2str([round(s_P_shed,2);zeros(length(N_subs),1)]),'HorizontalAlignment', 'center','FontSize', 20, 'Color','r'); % printf the shedded load (if any).
 text(pi.XData-os, pi.YData-os, num2str(sqrt(s_v_i)),'HorizontalAlignment', 'center','FontSize', 15, 'Color','g'); % printf the nodes' voltage (sqrt(v_j)).
 for l=1:L
     Coor1_PQ=(pi.XData(s(l))+pi.XData(t(l)))/2;
     Coor2_PQ=(pi.YData(s(l))+pi.YData(t(l)))/2;
-    text(Coor1_PQ, Coor2_PQ, num2str(s_P_ij(l)+s_Q_ij(l)*i),'HorizontalAlignment', 'center','FontSize', 15, 'Color','b'); % printf the complex power in distribution lines(if any).
+    text(Coor1_PQ, Coor2_PQ, num2str(round(s_P_ij(l)+s_Q_ij(l)*i,2)),'HorizontalAlignment', 'center','FontSize', 15, 'Color','b'); % printf the complex power in distribution lines(if any).
 end 
 pi.NodeLabel={};
 %% Save the results
