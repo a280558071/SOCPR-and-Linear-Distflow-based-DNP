@@ -85,7 +85,7 @@ Cons=[Cons,v_min<=v_i<=v_max];
 Cons_PQ=[P_ij.^2+Q_ij.^2<=y_ij*S_max.^2];
 Cons=[Cons, Cons_PQ];
 %% **********Objectives*************
-Obj_inv=sum(Cost.*y_ij);
+Obj_inv=sum(Cost.*y_ij); %investment cost, related to line investment
 Obj_ope=M*sum(P_shed);
 Obj=Obj_inv+Obj_ope;
 %% ********* Solve the probelm
