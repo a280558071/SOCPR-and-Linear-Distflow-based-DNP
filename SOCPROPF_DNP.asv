@@ -70,7 +70,7 @@ Cons=[];
 % S_ij=s_i+\sum_(h:h★i)(S_hi-z_hi，l_hi) for any (i,j)（E, 
 % denoted by node-branch incidence matrix I
 Cons_S=[];
-Cons_S=[In*P_ij-Inn*(r.*l_ij)==[-(P_load-P_shed);g_subs_P],In*Q_ij-Inn*(x.*l_ij)==[-(Q_load-Q_shed);g_subs_Q], P_shed>=0,Q_shed==P_shed*sqrt(1-n^2)/n];
+Cons_S=[In*P_ij+Inn*(r.*l_ij)==[-(P_load-P_shed);g_subs_P],In*Q_ij+Inn*(x.*l_ij)==[-(Q_load-Q_shed);g_subs_Q], P_shed>=0,Q_shed==P_shed*sqrt(1-n^2)/n];
 Cons=[Cons,Cons_S];
 %% 2. Voltage Calculation
 % v_i-v_j=2Re(z_ij，S_ij*)+(r.^2+x.^2).*l_ij=2(r，P_ij,i+x，Q_ij,i)+(r.^2+x.^2).*l_ij
