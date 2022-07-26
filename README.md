@@ -14,3 +14,4 @@ Therefore, you should have MATLAB, YALMIP and GUROBI installed in your PC to mak
 * [1] M. E. Baran and F. F. Wu, “Optimal capacitor placement on radial distribution systems,” IEEE Trans. Power Delivery, vol. 4, no. 1, pp. 725–734,1989.
 * [2] M. E. Baran and F. F. Wu, “Optimal sizing of capacitors placed on a radial distribution system,” IEEE Trans. Power Delivery, vol. 4, no. 1, pp. 735–743, 1989
 * [3] L Gan, N Li, U Topcu, SH Low, Exact convex relaxation of optimal power flow in radial networks, IEEE Transactions on Automatic Control 60 (1), 72-87, 2014
+* Update in 2022/07/26 is important, previous version "SOCPROPF_DNP.m" could not produce optimal results due to a mistake in modeling.
