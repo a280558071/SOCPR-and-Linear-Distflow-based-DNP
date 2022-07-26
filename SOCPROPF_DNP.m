@@ -70,7 +70,7 @@ Cons=[];
 % S_ij=s_i+\sum_(h:h★i)(S_hi-z_hi，l_hi) for any (i,j)（E, 
 % denoted by node-branch incidence matrix I
 Cons_S=[];
-Cons_S=[In*P_ij+Inn*(r.*l_ij)==[-(P_load-P_shed);g_subs_P],In*Q_ij+Inn*(x.*l_ij)==[-(Q_load-Q_shed);g_subs_Q], P_shed>=0,Q_shed==P_shed*sqrt(1-n^2)/n];
+Cons_S=[In*P_ij-Inn*(r.*l_ij)==[-(P_load-P_shed);g_subs_P],In*Q_ij-Inn*(x.*l_ij)==[-(Q_load-Q_shed);g_subs_Q], P_shed>=0,Q_shed==P_shed*sqrt(1-n^2)/n];
 Cons=[Cons,Cons_S];
 %% 2. Voltage Calculation
 % v_i-v_j=2Re(z_ij，S_ij*)+(r.^2+x.^2).*l_ij=2(r，P_ij,i+x，Q_ij,i)+(r.^2+x.^2).*l_ij
@@ -107,6 +107,7 @@ s_P_shed=value(P_shed);
 s_Q_shed=value(Q_shed);
 s_g_subs_P=value(g_subs_P);
 s_g_subs_Q=value(g_subs_Q);
+s_l_ij=value(l_ij);
 s_Obj=value(Obj);
 %% Print the results in the command line
 display('！！！！！！！！号皿圭宛泌和！！！！！！！！！！！！！！');
@@ -133,7 +134,7 @@ text(pi.XData-os, pi.YData-os, num2str(sqrt(s_v_i)),'HorizontalAlignment', 'cent
 for l=1:L
     Coor1_PQ=(pi.XData(s(l))+pi.XData(t(l)))/2;
     Coor2_PQ=(pi.YData(s(l))+pi.YData(t(l)))/2;
-    text(Coor1_PQ, Coor2_PQ, num2str(s_P_ij(l)+s_Q_ij(l)*i),'HorizontalAlignment', 'center','FontSize', 15, 'Color','b'); % printf the complex power in distribution lines(if any).
+    text(Coor1_PQ, Coor2_PQ, num2str(s_P_ij(l)+s_Q_ij(l)*i,4),'HorizontalAlignment', 'center','FontSize', 15, 'Color','b'); % printf the complex power in distribution lines(if any).
 end 
 pi.NodeLabel={};
 %% Save the results
