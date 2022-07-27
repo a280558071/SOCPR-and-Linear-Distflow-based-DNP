@@ -1,29 +1,29 @@
 %% This function implement the technique in [1], on exact convex relaxation for distribution system optimal power flow (DOPF)
 % It includes the exmaple of SCE 47 bus in [1], and allow comparison
-% between with/without s¡ÊS_volt in Sec. IV..
+% between with/without sï¿½ï¿½S_volt in Sec. IV..
 % [1] Gan L.,Li N.,Topcu U.and H. Low S. 2015. Exact Convex Relaxation of Optimal Power Flow in Radial Networks.
 % IEEE Transactions on Automatic Control 60(1). 72-87. 10.1109/TAC.2014.2332712.
 
 clear
-%% With/without s¡ÊS_volt
-WithSvolt=1; % 1 / 0 means with / without s¡ÊS_volt
-%% ÏµÍ³²ÎÊý
+%% With/without sï¿½ï¿½S_volt
+WithSvolt=1; % 1 / 0 means with / without sï¿½ï¿½S_volt
+%% ÏµÍ³ï¿½ï¿½ï¿½ï¿½
 Ubase=12.35e3; % unit:V
 Sbase=1e7;   % unit:VA
 Ibase=Sbase/sqrt(3)/Ubase; % unit:A
-Zbase=Ubase/Ibase/sqrt(3);  % unit: ¦¸
-netpara=xlsread('excel2021','ÍøÂç²ÎÊý');
-loadpoint=xlsread('excel2021','½Úµã¸ººÉ');
-L=size(netpara,1);%ÍøÂçÖÐµÄÖ§Â·
-r=netpara(:,4)/Zbase;%µç×è,unit: p.u.
-x=netpara(:,5)/Zbase;%µç¿¹,unit: p.u.
-So=loadpoint(:,3)*1e6/Sbase;%½Úµã¸ººÉ¹¦ÂÊ,unit: MVA
-judge=loadpoint(:,4); %½ÚµãÀàÐÍ
-I_max=560.98/Ibase; % Ubase=12.35e3, ¼ÙÉèÃ¿ÌõÏßÂ·×î¶à´«Êä 12MW ¹¦ÂÊ£¬Ôò¶ÔÓ¦µçÁ÷ÖµI_maxÎª 12e6/Ubase/sqrt(3)= 560.98 A,
+Zbase=Ubase/Ibase/sqrt(3);  % unit: ï¿½ï¿½
+netpara=xlsread('SCE47','ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+loadpoint=xlsread('SCE47','ï¿½Úµã¸ºï¿½ï¿½');
+L=size(netpara,1);%ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Ö§Â·
+r=netpara(:,4)/Zbase;%ï¿½ï¿½ï¿½ï¿½,unit: p.u.
+x=netpara(:,5)/Zbase;%ï¿½ç¿¹,unit: p.u.
+So=loadpoint(:,3)*1e6/Sbase;%ï¿½Úµã¸ºï¿½É¹ï¿½ï¿½ï¿½,unit: MVA
+judge=loadpoint(:,4); %ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½
+I_max=560.98/Ibase; % Ubase=12.35e3, ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½à´«ï¿½ï¿½ 12MW ï¿½ï¿½ï¿½Ê£ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ÖµI_maxÎª 12e6/Ubase/sqrt(3)= 560.98 A,
 v_max=1.1^2;
 v_min=0.9^2;
 
-%% »æÖÆÍøÂçÇé¿ö£¬±ãÓÚºóÐø¹Û²ì
+%% ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úºï¿½ï¿½ï¿½ï¿½Û²ï¿½
 I=netpara(:,2);
 J=netpara(:,3);
 G=graph(I,J);
@@ -31,38 +31,38 @@ h1=figure;
 p=plot(G);
 highlight(p,find(judge==1),'Marker','s','NodeColor','c','Markersize',10);  % Capacitator
 highlight(p,find(judge==0),'Marker','v','NodeColor','y','Markersize',10);  % PV panels
-In=myincidence(I,J); % ½ÚµãÖ§Â·¹ØÁª¾ØÕó
+In=myincidence(I,J); % ï¿½Úµï¿½Ö§Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 Inn=In;
-Inn(Inn>0)=0;    % Inn is the negative part of I£¬±íÊ¾´Ó½Úµã³ö·¢µÄÖ§Â·µÄ±àºÅ
-%% ½ÚµãÊý
+Inn(Inn>0)=0;    % Inn is the negative part of Iï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Ó½Úµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö§Â·ï¿½Ä±ï¿½ï¿½
+%% ï¿½Úµï¿½ï¿½ï¿½
 N=47;
 %m=4;
-%% ¾ö²ß±äÁ¿
-P_ij=sdpvar(L,1); % Pij=sdpvar(numnodes,numnodes,'full');% ½Úµã1Ïò½Úµãj´«ËÍµÄÓÐ¹¦¹¦ÂÊ
-Q_ij=sdpvar(L,1); % Qij=sdpvar(numnodes,numnodes,'full');%½ÚµãiÏò½Úµãj´«ËÍµÄÎÞ¹¦¹¦ÂÊ
-u=sdpvar(N,1); % ¸÷½ÚµãµçÑ¹
+%% ï¿½ï¿½ï¿½ß±ï¿½ï¿½ï¿½
+P_ij=sdpvar(L,1); % Pij=sdpvar(numnodes,numnodes,'full');% ï¿½Úµï¿½1ï¿½ï¿½Úµï¿½jï¿½ï¿½ï¿½Íµï¿½ï¿½Ð¹ï¿½ï¿½ï¿½ï¿½ï¿½
+Q_ij=sdpvar(L,1); % Qij=sdpvar(numnodes,numnodes,'full');%ï¿½Úµï¿½iï¿½ï¿½Úµï¿½jï¿½ï¿½ï¿½Íµï¿½ï¿½Þ¹ï¿½ï¿½ï¿½ï¿½ï¿½
+u=sdpvar(N,1); % ï¿½ï¿½ï¿½Úµï¿½ï¿½Ñ¹
 v=sdpvar(N,1); % u^2
-l_ij=sdpvar(L,1) ;% µçÁ÷·ùÖµµÄÆ½·½
-Pi=sdpvar(N,1);% ½Úµã×¢ÈëÓÐ¹¦¹¦ÂÊ ppoint(i)
-Qi=sdpvar(N,1);%½Úµã×¢Èëwu¹¦¹¦ÂÊ
+l_ij=sdpvar(L,1) ;% ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Æ½ï¿½ï¿½
+Pi=sdpvar(N,1);% ï¿½Úµï¿½×¢ï¿½ï¿½ï¿½Ð¹ï¿½ï¿½ï¿½ï¿½ï¿½ ppoint(i)
+Qi=sdpvar(N,1);%ï¿½Úµï¿½×¢ï¿½ï¿½wuï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-%% ×è¿¹¾ØÕó¾ØÕó½Úµã²ÎÊý³õÊ¼»¯
+%% ï¿½è¿¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
 w=sqrt(-1);
 z=r+x*w;
-z_c=conj(z); % ¶ÔzÈ¡¹²éî
+z_c=conj(z); % ï¿½ï¿½zÈ¡ï¿½ï¿½ï¿½ï¿½
 
 Cons=[];
-%% ÅÐ¶ÏÉ¸Ñ¡¸ººÉ½ÚµãÀàÐÍ
+%% ï¿½Ð¶ï¿½É¸Ñ¡ï¿½ï¿½ï¿½É½Úµï¿½ï¿½ï¿½ï¿½ï¿½
 Cons_Load=[];
 Eta=2.8;  % Scale up the PV penetration rate, 5 means 5 times than Table I in [1]
 Pi_max=zeros(N,1);
 Qi_max=zeros(N,1);
 for i=1:N
-    if judge(i)==1     %µçÈÝ²¹³¥
+    if judge(i)==1     %ï¿½ï¿½ï¿½Ý²ï¿½ï¿½ï¿½
         Cons_Load=[Cons_Load,Pi(i)==0];
         Qi_max(i)=So(i)*Eta;
         Cons_Load=[Cons_Load,0<=Qi(i)<=Qi_max(i)];   %st=[pl(i)==0,0<=ql(i)<=So(i)];
-    elseif judge(i)==2 %ÆÕÍ¨½Úµã¸ººÉ
+    elseif judge(i)==2 %ï¿½ï¿½Í¨ï¿½Úµã¸ºï¿½ï¿½
         Pi_max(i)=-So(i)*0.9;
         Qi_max(i)=-So(i)*sqrt(1-0.9^2);
         Cons_Load=[Cons_Load,Pi(i)==Pi_max];  % cos(0.9)???
@@ -71,7 +71,7 @@ for i=1:N
         Pi_max(i)=So(i)*Eta;
         Cons_Load=[Cons_Load,0<=Pi(i)<=Pi_max(i)];
         Cons_Load=[Cons_Load,0==Qi(i)];
-    elseif judge(i)==3  %slack node (Ê×¶Ë½Úµã£¬¼´±äµçÕ¾)
+    elseif judge(i)==3  %slack node (ï¿½×¶Ë½Úµã£¬ï¿½ï¿½ï¿½ï¿½ï¿½Õ¾)
         Cons_Load=[Cons_Load,-So(i)<=Pi(i)<=So(i)];
         Cons_Load=[Cons_Load,-So(i)*0.5<=Qi(i)<=So(i)*0.5];
     end
@@ -94,7 +94,7 @@ for i=1:length(LeafNodes)
     lt=LeafNodes(i);
     Path = shortestpath(G,lt,1);
     A_l{i}=zeros(2,2,length(Path)-1);
-    for j=1:length(Path)-1 % for all node in Path from lt¡ú1, calculate A_l
+    for j=1:length(Path)-1 % for all node in Path from ltï¿½ï¿½1, calculate A_l
 %         nl=[]; % the set of 1,2,...,nl in C1
         for k=1:L
             if (IJ(k,1)==Path(j) && IJ(k,2)==Path(j+1))||(IJ(k,2)==Path(j) && IJ(k,1)==Path(j+1))
@@ -115,13 +115,13 @@ else
     display('Important message: C1 holds !')
 end
 
-%% µçÁ÷µçÑ¹·ùÖµÔ¼Êø
+%% ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ÖµÔ¼ï¿½ï¿½
 Cons_Limits=[I_max^2>=l_ij>=0, v(2:end)>=v_min];
 Cons=[Cons,Cons_Limits];
 display('Constraints on voltage and current limits completed!')
 % Cons_Limits
 
-%% ½ÚµãµçÑ¹¼ÆËãÔ¼Êø
+%% ï¿½Úµï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½
 Cons_V=[];
 Cons_V=[Cons_V, v(1)==v_max];
 Cons_V=[Cons_V, In'*v == 2*r.*P_ij+2*x.*Q_ij-(r.^2+x.^2).*l_ij];
@@ -129,23 +129,23 @@ Cons=[Cons,Cons_V];
 display('Constraints on voltage calculation completed!')
 % Cons_V
 
-%% SOCËÉ³ÚÔ¼Êø
+%% SOCï¿½É³ï¿½Ô¼ï¿½ï¿½
 Cons_SOC=[];
 for k=1:L
-    i=I(k);%Ê×½Úµã
+    i=I(k);%ï¿½×½Úµï¿½
     Cons_SOC=[Cons_SOC,(l_ij(k)+v(i)).^2 >= 4*P_ij(k).^2 + 4*Q_ij(k).^2 + (l_ij(k)-v(i)).^2];
 end
 Cons=[Cons,Cons_SOC];
 display('Constraints on SOCP relaxation completed!')
 % Cons_SOC
 
-%%  ³±Á÷Ô¼Êø
+%%  ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½
 Cons_PF=[In*P_ij - Inn*(r.*l_ij) == Pi, In*Q_ij - Inn*(x.*l_ij) == Qi];
 Cons=[Cons,Cons_PF];
 display('Constraints on power flow caculation completed!')
 % Cons_PF
 
-%% Constraints on s¡ÊS_{volt}
+%% Constraints on sï¿½ï¿½S_{volt}
 if WithSvolt==1
     P_ij_s=sdpvar(L,1); % the solution of the Linear DistFlow model, to constitue Svolt
     Q_ij_s=sdpvar(L,1); % the solution of the Linear DistFlow model
@@ -157,39 +157,39 @@ if WithSvolt==1
     Cons_Svolt=[Cons_Svolt, In'*v_s == 2*r.*P_ij_s+2*x.*Q_ij_s];
     Cons_Svolt=[Cons_Svolt, In(2:end,:)*P_ij_s == Pi(2:end), In(2:end,:)*Q_ij_s == Qi(2:end)];
     Cons=[Cons, Cons_Svolt];
-    display('Constraints on s¡ÊS_{volt} completed!')
+    display('Constraints on sï¿½ï¿½S_{volt} completed!')
 end
 
-%% Ä¿±êº¯Êý
+%% Ä¿ï¿½êº¯ï¿½ï¿½
 Pr_sub=0.9;
 Pr_pv=[0.8 0.7 0.6 0.7 0.8];
 C=Pr_pv*Pi([find(judge==0)])+Pr_sub*Pi(1);
 % C=sum(Pi);
-%% Çó½â
+%% ï¿½ï¿½ï¿½
 ops=sdpsettings('solver', 'gurobi');
 result=optimize(Cons,C,ops);
 result.info
 
 if result.problem==0
-    %% ±£´æÇó½â½á¹û
+    %% ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     s_P_ij=value(P_ij)*Sbase/1e6;
     s_Q_ij=value(Q_ij)*Sbase/1e6;
     s_v=value(v);
     s_l_ij=value(l_ij);
     s_Pi=value(Pi)*Sbase/1e6;
     s_Qi=value(Qi)*Sbase/1e6;
-    display(['¹â·ü·¢µç×Ü³öÁ¦£º',num2str(sum(s_Pi([find(judge==0)])),3),' MW']);
-    display(['±äµçÕ¾×Ü³öÁ¦£º',num2str(sum(s_Pi(1)),3),' MW']);
+    display(['ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü³ï¿½ï¿½ï¿½ï¿½ï¿½',num2str(sum(s_Pi([find(judge==0)])),3),' MW']);
+    display(['ï¿½ï¿½ï¿½Õ¾ï¿½Ü³ï¿½ï¿½ï¿½ï¿½ï¿½',num2str(sum(s_Pi(1)),3),' MW']);
     if WithSvolt==1
         s_P_ij_s=value(P_ij_s)*Sbase/1e6;
         s_Q_ij_s=value(Q_ij_s)*Sbase/1e6;
         s_v_s=value(v_s);
     end
     
-    %% ÔÚÍ¼ÉÏ±ê×¢Ò»Ð©ÐÅÏ¢
+    %% ï¿½ï¿½Í¼ï¿½Ï±ï¿½×¢Ò»Ð©ï¿½ï¿½Ï¢
     for k=1:L
         if norm([s_P_ij(k) s_Q_ij(k)])~=0
-            highlight(p,I(k),J(k),'LineWidth',norm([s_P_ij(k) s_Q_ij(k)]));  % °ÑÏßÂ·¿í¶ÈÉèÖÃÎª³±Á÷´óÐ¡
+            highlight(p,I(k),J(k),'LineWidth',norm([s_P_ij(k) s_Q_ij(k)]));  % ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡
         end
     end
     os=0.1; % offset value to print text in the figure
@@ -204,23 +204,23 @@ if result.problem==0
         text(Coor1_PQ, Coor2_PQ, num2str(s_P_ij(k)+s_Q_ij(k)*w,2),'HorizontalAlignment', 'center','FontSize', 10, 'Color','b'); % printf the complex power in distribution lines(if any).
     end
     
-    %% ¹Û²ìSOCÔ¼ÊøÊÇ·ñÈ¡µÈºÅ
+    %% ï¿½Û²ï¿½SOCÔ¼ï¿½ï¿½ï¿½Ç·ï¿½È¡ï¿½Èºï¿½
     for k=1:L
-        i=I(k);%Ê×½Úµã
+        i=I(k);%ï¿½×½Úµï¿½
         SOC_gap(k)=(s_l_ij(k)+s_v(i)).^2-(4*(s_P_ij(k)*1e6/Sbase).^2+4*(s_Q_ij(k)*1e6/Sbase).^2+(s_l_ij(k)-s_v(i)).^2);
         if round(SOC_gap(k),3)==0 % always some errors in duality gap
-            %display(['ÏßÂ· ',num2str(I(k)),' ',num2str(J(k)),' SOCPËÉ³ÚÔ¼ÊøÈ¡µÈºÅ£¡'])
+            %display(['ï¿½ï¿½Â· ',num2str(I(k)),' ',num2str(J(k)),' SOCPï¿½É³ï¿½Ô¼ï¿½ï¿½È¡ï¿½ÈºÅ£ï¿½'])
         else
-            display(['Line ',num2str(I(k)),' ',num2str(J(k)),' SOCP relaxation is not exact£¡',' Line impedance z = ',num2str(z(k)*Zbase,3), ' ¦¸'])
+            display(['Line ',num2str(I(k)),' ',num2str(J(k)),' SOCP relaxation is not exactï¿½ï¿½',' Line impedance z = ',num2str(z(k)*Zbase,3), ' ï¿½ï¿½'])
         end
     end
     SOC_gap=SOC_gap';
     
-    %% ¹Û²ì
+    %% ï¿½Û²ï¿½
     
     if WithSvolt==1
-        title("Exact SOCP relaxation for DOPF£ºSCE 47 bus case with s¡ÊS_{volt}")
+        title("Exact SOCP relaxation for DOPFï¿½ï¿½SCE 47 bus case with sï¿½ï¿½S_{volt}")
     else
-        title("SOCP relaxation for DOPF£ºSCE 47 bus case WITHOUT s¡ÊS_{volt}")
+        title("SOCP relaxation for DOPFï¿½ï¿½SCE 47 bus case WITHOUT sï¿½ï¿½S_{volt}")
     end
 end
