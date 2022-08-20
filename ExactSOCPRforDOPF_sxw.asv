@@ -6,7 +6,7 @@
 
 clear
 %% With/without s \in S_volt
-WithSvolt=0; % 1 / 0 means with / without s\in S_volt
+WithSvolt=1; % 1 / 0 means with / without s\in S_volt
 %% System Parameters
 Ubase=12.35e3; % unit:V
 Sbase=1e7;   % unit:VA
@@ -133,7 +133,7 @@ display('Constraints on voltage calculation completed!')
 %% Second-Order Cone (SOC) limits�
 Cons_SOC=[];
 for k=1:L
-    i=I(k);% Starting node of line k
+    i=I(k);%�׽ڵ�
     Cons_SOC=[Cons_SOC,(l_ij(k)+v(i)).^2 >= 4*P_ij(k).^2 + 4*Q_ij(k).^2 + (l_ij(k)-v(i)).^2];
 end
 Cons=[Cons,Cons_SOC];
@@ -162,10 +162,10 @@ if WithSvolt==1
 end
 
 %% Objective function
-% Pr_sub=0.9;
-% Pr_pv=[0.8 0.7 0.6 0.5 0.4];
-% C=Pr_pv*Pi([find(judge==0)])+Pr_sub*Pi(1);
-C=sum(Pi([find(judge==0);1]));
+Pr_sub=0.9;
+Pr_pv=[0.8 0.7 0.6 0.7 0.8];
+C=Pr_pv*Pi([find(judge==0)])+Pr_sub*Pi(1);
+% C=sum(Pi);
 %% Solve the problem
 ops=sdpsettings('solver', 'gurobi');
 result=optimize(Cons,C,ops);
