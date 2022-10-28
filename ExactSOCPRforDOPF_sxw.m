@@ -31,7 +31,7 @@ h1=figure;
 p=plot(G);
 highlight(p,find(judge==1),'Marker','s','NodeColor','c','Markersize',10);  % Capacitator
 highlight(p,find(judge==0),'Marker','v','NodeColor','y','Markersize',10);  % PV panels
-In=myincidence(I,J); % node-incidence matrix
+In=myincidence(I,J); % node-branch incidence matrix
 Inn=In;
 Inn(Inn>0)=0;    % Inn is the negative part of I, showing the lines starting from nodes
 %% Number of nodes
