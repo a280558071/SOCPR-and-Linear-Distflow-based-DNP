@@ -167,7 +167,7 @@ end
 % C=Pr_pv*Pi([find(judge==0)])+Pr_sub*Pi(1);
 C=sum(Pi([find(judge==0);1]));
 %% Solve the problem
-ops=sdpsettings('solver', 'gurobi');
+ops=sdpsettings('solver', 'copt');
 result=optimize(Cons,C,ops);
 result.info
 
