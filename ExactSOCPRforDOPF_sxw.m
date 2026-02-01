@@ -143,7 +143,7 @@ display('Constraints on SOCP relaxation completed!')
 %% Power flow limits
 Cons_PF=[In*P_ij - Inn*(r.*l_ij) == Pi, In*Q_ij - Inn*(x.*l_ij) == Qi];
 Cons=[Cons,Cons_PF];
-display('Constraints on power flow caculation completed!')
+display('Constraints on power flow calculation completed!')
 % Cons_PF
 
 %% Constraints on s \in S_{volt}
@@ -167,7 +167,7 @@ end
 % C=Pr_pv*Pi([find(judge==0)])+Pr_sub*Pi(1);
 C=sum(Pi([find(judge==0);1]));
 %% Solve the problem
-ops=sdpsettings('solver', 'copt');
+ops=sdpsettings('solver', 'COPT', 'verbose',3); 
 result=optimize(Cons,C,ops);
 result.info
 

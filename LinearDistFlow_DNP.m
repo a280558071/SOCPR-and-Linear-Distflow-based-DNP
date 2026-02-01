@@ -90,7 +90,7 @@ Obj_ope=M*sum(P_shed);
 Obj=Obj_inv+Obj_ope;
 %% ********* Solve the probelm
 % ops=sdpsettings('solver','gurobi', 'gurobi.Heuristics',0,'gurobi.Cuts',0,'gurobi.TuneTimeLimit',0); %,'usex0',1,'gurobi.MIPGap',5e-2,
-ops=sdpsettings('solver','COPT'); 
+ops=sdpsettings('solver','COPT', 'verbose',1); 
 sol=optimize(Cons,Obj,ops)
 %% Save the solution with "s_" as start
 s_y_ij=value(y_ij);
